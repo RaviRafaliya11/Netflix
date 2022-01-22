@@ -1,0 +1,26 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-[#181818] text-gray-300;
+  }
+}
+
+@layer components {
+  .header_items {
+    @apply flex flex-col items-center cursor-pointer w-12 sm:w-20 hover:text-white;
+  }
+
+  .header_icon {
+    @apply hover:animate-bounce h-8 w-8 mb-1 transform;
+  }
+}
+
+* {
+  font-family: "Poppins";
+  user-select: none;
+}
