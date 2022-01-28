@@ -3,7 +3,7 @@ import { HiOutlineThumbUp, HiOutlineStar } from "react-icons/hi";
 import Link from "next/link";
 import { IMAGE_BASE_URL } from "./../utils/Common";
 
-const Thumbnail = ({ results, type, default_type }) => {
+const Thumbnail = ({ results, type }) => {
   return (
     <div
       className="p-2 group cursor-pointer
@@ -36,7 +36,7 @@ const Thumbnail = ({ results, type, default_type }) => {
         </h2>
 
         <p className="flex items-center opacity-0 group-hover:opacity-100 text-transform: capitalize ">
-          {results.media_type && `${results.media_type} • `}{" "}
+          {results.media_type && `${results.media_type || type} • `}{" "}
           <HiOutlineStar className="h-5 mx-2" />
           {(Math.round(results.vote_average * 100) / 100).toFixed(1)} •{" "}
           <HiOutlineThumbUp className="h-5 mx-2" />
