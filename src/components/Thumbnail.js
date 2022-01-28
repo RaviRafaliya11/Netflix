@@ -36,7 +36,7 @@ const Thumbnail = ({ results, type }) => {
         </h2>
 
         <p className="flex items-center opacity-0 group-hover:opacity-100 text-transform: capitalize ">
-          {results.media_type && `${results.media_type || type} • `}{" "}
+          {results.media_type ? `${results.media_type} • ` : `${type} •`}{" "}
           <HiOutlineStar className="h-5 mx-2" />
           {(Math.round(results.vote_average * 100) / 100).toFixed(1)} •{" "}
           <HiOutlineThumbUp className="h-5 mx-2" />
