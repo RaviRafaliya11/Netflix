@@ -24,3 +24,12 @@
   font-family: "Poppins";
   user-select: none;
 }
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  @apply bg-red-500;
+}
