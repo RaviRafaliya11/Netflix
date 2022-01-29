@@ -13,9 +13,21 @@ function Nav() {
           <h2
             key={key}
             onClick={() => router.push(`/?genre=${key}`)}
-            className="last:pr-24 cursor-pointer transition duration-100 
+            className={`last:pr-24 cursor-pointer transition duration-100 
                     transform hover:scale-125 hover:text-white 
-                    active:text-red-500 "
+                  
+                    ${
+                      router.query.genre
+                        ? `${
+                            router.query.genre ===
+                            title.replace(/[^a-zA-Z]/g, "")
+                              ? "text-red-500"
+                              : ""
+                          }`
+                        : "first:text-red-500"
+                    }
+
+                    `}
           >
             {title}
           </h2>

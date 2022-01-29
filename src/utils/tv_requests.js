@@ -1,80 +1,80 @@
 import { API_KEY } from "./Common";
 
 export default {
-  fetchTrendingWeek: {
+  Trending: {
     title: "Trending",
     url: `/trending/tv/week?api_key=${API_KEY}&language=en-US`,
   },
-  fetchTopRated: {
+  TopRated: {
     title: "Top Rated",
     url: `/tv/top_rated?api_key=${API_KEY}&language=en-US`,
   },
-  fetchPopular: {
+  Popular: {
     title: "Popular",
     url: `/tv/popular?api_key=${API_KEY}&language=en-US`,
   },
-  fetchAction: {
+  ActionAdventure: {
     title: "Action & Adventure",
     url: `/discover/tv?api_key=${API_KEY}&with_genres=10759`,
   },
 
-  fetchAnimation: {
+  Animation: {
     title: "Animation",
     url: `/discover/tv?api_key=${API_KEY}&with_genres=16`,
   },
-  fetchComedy: {
+  Comedy: {
     title: "Comedy",
     url: `/discover/tv?api_key=${API_KEY}&with_genres=35`,
   },
-  fetchCrime: {
+  Crime: {
     title: "Crime",
     url: `/discover/tv?api_key=${API_KEY}&with_genres=80`,
   },
-  fetchDocumentary: {
+  Documentary: {
     title: "Documentary",
     url: `/discover/tv?api_key=${API_KEY}&with_genres=99`,
   },
-  fetchDrama: {
+  Drama: {
     title: "Drama",
     url: `/discover/tv?api_key=${API_KEY}&with_genres=18`,
   },
-  fetchFamily: {
+  Family: {
     title: "Family",
     url: `/discover/tv?api_key=${API_KEY}&with_genres=10751`,
   },
-  fetchKids: {
+  Kids: {
     title: "Kids",
     url: `/discover/tv?api_key=${API_KEY}&with_genres=10762`,
   },
-  fetchMystery: {
+  Mystery: {
     title: "Mystery",
     url: `/discover/tv?api_key=${API_KEY}&with_genres=9648`,
   },
-  fetchNews: {
+  News: {
     title: "News",
     url: `/discover/tv?api_key=${API_KEY}&with_genres=10763`,
   },
-  fetchReality: {
+  Reality: {
     title: "Reality",
     url: `/discover/tv?api_key=${API_KEY}&with_genres=10764`,
   },
-  fetchSciFiFantasy: {
+  SciFiFantasy: {
     title: "Sci-Fi & Fantasy",
     url: `/discover/tv?api_key=${API_KEY}&with_genres=10765`,
   },
-  fetchSoap: {
+  Soap: {
     title: "Soap",
     url: `/discover/tv?api_key=${API_KEY}&with_genres=10766`,
   },
-  fetchTalk: {
+  Talk: {
     title: "Talk",
     url: `/discover/tv?api_key=${API_KEY}&with_genres=10767`,
   },
-  fetchWarPolitics: {
+  WarPolitics: {
     title: "War & Politics",
     url: `/discover/tv?api_key=${API_KEY}&with_genres=10768`,
   },
-  fetchWestern: {
+  Western: {
     title: "Western",
     url: `/discover/tv?api_key=${API_KEY}&with_genres=37`,
   },

@@ -19,7 +19,7 @@ export default function Home({ results }) {
   const LoadMoreData = async () => {
     const req = await fetch(
       `${API_BASE_URL}${
-        movie_requests[query.genre]?.url || movie_requests.fetchTrending.url
+        movie_requests[query.genre]?.url || movie_requests.Trending.url
       }&page=${CurrentPage + 1}`
     );
     const newData = await req.json();
@@ -31,7 +31,7 @@ export default function Home({ results }) {
   const FetchData = async () => {
     const req = await fetch(
       `${API_BASE_URL}${
-        movie_requests[query.genre]?.url || movie_requests.fetchTrending.url
+        movie_requests[query.genre]?.url || movie_requests.Trending.url
       }`
     );
     const newData = await req.json();
@@ -71,7 +71,7 @@ export async function getServerSideProps(contex) {
   const genre = contex.query.genre;
   const request = await fetch(
     `${API_BASE_URL}${
-      movie_requests[genre]?.url || movie_requests.fetchTrending.url
+      movie_requests[genre]?.url || movie_requests.Trending.url
     }`
   ).then((res) => res.json());
   return {

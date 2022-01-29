@@ -1,98 +1,98 @@
 import { API_KEY } from "./Common";
 
 export default {
-  fetchTrending: {
+  Trending: {
     title: "Trending",
     url: `/trending/movie/week?api_key=${API_KEY}`,
   },
 
-  fetchTopRated: {
+  TopRated: {
     title: "Top Rated",
     url: `/movie/top_rated?api_key=${API_KEY}`,
   },
 
-  fetchAction: {
+  Action: {
     title: "Action",
     url: `/discover/movie?api_key=${API_KEY}&with_genres=28`,
   },
 
-  fetchAdventure: {
+  Adventure: {
     title: "Adventure",
     url: `/discover/movie?api_key=${API_KEY}&with_genres=12`,
   },
 
-  fetchAnimation: {
+  Animation: {
     title: "Animation",
     url: `/discover/movie?api_key=${API_KEY}&with_genres=16`,
   },
 
-  fetchComedy: {
+  Comedy: {
     title: "Comedy",
     url: `/discover/movie?api_key=${API_KEY}&with_genres=35`,
   },
-  fetchCrime: {
+  Crime: {
     title: "Crime",
     url: `/discover/movie?api_key=${API_KEY}&with_genres=80`,
   },
-  fetchDocumentary: {
+  Documentary: {
     title: "Documentary",
     url: `/discover/movie?api_key=${API_KEY}&with_genres=99`,
   },
-  fetchDrama: {
+  Drama: {
     title: "Drama",
     url: `/discover/movie?api_key=${API_KEY}&with_genres=18`,
   },
-  fetchFamily: {
+  Family: {
     title: "Family",
     url: `/discover/movie?api_key=${API_KEY}&with_genres=10751`,
   },
-  fetchFantasy: {
+  Fantasy: {
     title: "Fantasy",
     url: `/discover/movie?api_key=${API_KEY}&with_genres=14`,
   },
-  fetchHistory: {
+  History: {
     title: "History",
     url: `/discover/movie?api_key=${API_KEY}&with_genres=36`,
   },
-  fetchHorror: {
+  Horror: {
     title: "Horror",
     url: `/discover/movie?api_key=${API_KEY}&with_genres=27`,
   },
 
-  fetchMusic: {
+  Music: {
     title: "Music",
     url: `/discover/movie?api_key=${API_KEY}&with_genres=10402`,
   },
-  fetchMystery: {
+  Mystery: {
     title: "Mystery",
     url: `/discover/movie?api_key=${API_KEY}&with_genres=9648`,
   },
 
-  fetchRomance: {
+  Romance: {
     title: "Romance",
     url: `/discover/movie?api_key=${API_KEY}&with_genres=10749`,
   },
 
-  fetchSciFI: {
-    title: "Sci-FI",
+  ScienceFiction: {
+    title: "Science-Fiction",
     url: `/discover/movie?api_key=${API_KEY}&with_genres=878`,
   },
-  fetchTV: {
+  TVMovie: {
     title: "TV Movie",
     url: `/discover/movie?api_key=${API_KEY}&with_genres=10770`,
   },
 
-  fetchThriller: {
+  Thriller: {
     title: "Thriller",
     url: `/discover/movie?api_key=${API_KEY}&with_genres=53`,
   },
 
-  fetchWar: {
+  War: {
     title: "War",
     url: `/discover/movie?api_key=${API_KEY}&with_genres=10752`,
   },
 
-  fetchWestern: {
+  Western: {
     title: "Western",
     url: `/discover/movie?api_key=${API_KEY}&with_genres=37`,
   },

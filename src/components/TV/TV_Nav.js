@@ -3,6 +3,8 @@ import tv_requests from "../../utils/tv_requests";
 
 function TV_Nav() {
   const router = useRouter();
+
+  let x = "Act-ion & Adventure";
   return (
     <nav className="relative ">
       <div
@@ -13,9 +15,20 @@ function TV_Nav() {
           <h2
             key={key}
             onClick={() => router.push(`/tv?query=${key}`)}
-            className="last:pr-24 cursor-pointer transition duration-100 
-                    transform hover:scale-125 hover:text-white 
-                    active:text-red-500 "
+            className={`last:pr-24 cursor-pointer transition duration-100 
+            transform hover:scale-125 hover:text-white 
+          
+            ${
+              router.query.query
+                ? `${
+                    router.query.query === title.replace(/[^a-zA-Z]/g, "")
+                      ? "text-red-500"
+                      : ""
+                  }`
+                : "first:text-red-500"
+            }
+
+            `}
           >
             {title}
           </h2>
