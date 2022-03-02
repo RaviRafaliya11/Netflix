@@ -9,10 +9,8 @@ import { API_BASE_URL } from "../utils/Common";
 
 export default function TV_Home({ results }) {
   const { query } = useRouter();
-
   const [data, setData] = useState(results.results);
   const [CurrentPage, setCurrentPage] = useState(results.page);
-  const [TotalPage, setTotalPage] = useState(results.total_pages);
 
   const LoadMoreData = async () => {
     const req = await fetch(
@@ -24,25 +22,13 @@ export default function TV_Home({ results }) {
     const newData = await req.json();
     setData([...data, ...newData.results]);
     setCurrentPage(newData.page);
-    setTotalPage(newData.total_pages);
   };
 
-  // function to clear previous data
-  const FetchData = async () => {
-    const req = await fetch(
-      `${API_BASE_URL}${
-        tv_requests[query.query]?.url || tv_requests.Trending.url
-      }`
-    );
-    const newData = await req.json();
-    setData(newData.results);
-    setCurrentPage(newData.page);
-    setTotalPage(newData.total_pages);
-  };
   useEffect(() => {
-    setData([]);
-    FetchData();
+    setData(results.results);
+    setCurrentPage(results.page);
   }, [query]);
+
   return (
     <div>
       <Main_Theme>
@@ -50,7 +36,7 @@ export default function TV_Home({ results }) {
         <InfiniteScroll
           dataLength={data.length}
           next={LoadMoreData}
-          hasMore={CurrentPage !== TotalPage}
+          hasMore={CurrentPage !== results.total_pages}
           loader={
             <div className="flex items-center justify-center mb-3">
               <img src="/CubeLoader.svg" className="w-14 h-14" />

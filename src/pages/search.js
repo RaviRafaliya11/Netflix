@@ -4,32 +4,27 @@ import Results from "../components/Results";
 import { API_BASE_URL, API_KEY } from "../utils/Common";
 import { HiSearch } from "react-icons/hi";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { useRouter } from "next/router";
 
-export default function Search() {
-  const [keywoard, setKeywoard] = useState("");
+export default function Search({ results }) {
+  const router = useRouter();
+  const [keyword, setKeyword] = useState(router.query.q);
   const [data, setData] = useState();
-  const [CurrentPage, setCurrentPage] = useState(0);
-  const [TotalPage, setTotalPage] = useState();
-  const [mediaType, setmediaType] = useState("movie");
+  const [CurrentPage, setCurrentPage] = useState();
 
   const handlesubmit = async (e) => {
     e.preventDefault();
-    setmediaType("movie");
-    setData();
-    const req = await fetch(
-      `${API_BASE_URL}/search/${mediaType}?api_key=${API_KEY}&query=${keywoard}`
+    if (!keyword.trim()) return;
+    router.push(
+      `/search?q=${keyword.trim()}&type=${router.query.type || "movie"}`
     );
-    const newData = await req.json();
-    setData(newData.results);
-    setCurrentPage(newData.page);
-    setTotalPage(newData.total_pages);
   };
 
   const LoadMoreData = async () => {
     const req = await fetch(
-      `${API_BASE_URL}/search/${mediaType}?api_key=${API_KEY}&query=${keywoard}&page=${
-        CurrentPage + 1
-      }`
+      `${API_BASE_URL}/search/${router.query.type}?api_key=${API_KEY}&query=${
+        router.query.q
+      }&page=${CurrentPage + 1}`
     );
     const newData = await req.json();
     setData([...data, ...newData.results]);
@@ -37,18 +32,9 @@ export default function Search() {
   };
 
   useEffect(() => {
-    const filterdata = async () => {
-      const req = await await fetch(
-        `${API_BASE_URL}/search/${mediaType}?api_key=${API_KEY}&query=${keywoard}`
-      );
-      const newData = await req.json();
-      setData(newData.results);
-      setCurrentPage(newData.page);
-      setTotalPage(newData.total_pages);
-    };
-    filterdata();
-    console.log(data);
-  }, [mediaType]);
+    setData(results?.results);
+    setCurrentPage(results?.page);
+  }, [router.query.type, router.query.q]);
 
   return (
     <Main_Theme>
@@ -59,7 +45,8 @@ export default function Search() {
               type="search"
               placeholder="Search for a movie, tv show, person....."
               className=" bg-white opacity-80 outline-none w-full p-3 rounded-l-lg shadow-2xl text-black"
-              onChange={(e) => setKeywoard(e.target.value)}
+              onChange={(e) => setKeyword(e.target.value)}
+              defaultValue={keyword}
             />
 
             {/* Button */}
@@ -77,10 +64,16 @@ export default function Search() {
 
         {data ? (
           <div className="flex flex-col">
-            <div className="mt-5 mx-2 md:mx-8">
+            <div className="mt-5 mx-2 gap-5 md:mx-8 flex items-center justify-between">
+              {results?.total_results > 0 && (
+                <p>About {results?.total_results} results</p>
+              )}
               <select
-                onChange={(e) => setmediaType(e.target.value)}
-                className="bg-transparent py-1 px-2 rounded-md border border-gray-700 border-solid focus:outline-none float-right"
+                defaultValue={router.query.type || "movie"}
+                onChange={(e) =>
+                  router.push(`/search?q=${keyword}&type=${e.target.value}`)
+                }
+                className="bg-transparent ml-auto py-1 px-2 rounded-md border border-gray-700 border-solid focus:outline-none float-right"
               >
                 <option className="bg-[#181818] border-0 " value="movie">
                   Movie
@@ -106,19 +99,23 @@ export default function Search() {
                 <InfiniteScroll
                   dataLength={data.length}
                   next={LoadMoreData}
-                  hasMore={CurrentPage !== TotalPage}
+                  hasMore={CurrentPage !== results?.total_pages}
                   loader={
                     <div className="flex items-center justify-center mb-3">
                       <img src="/CubeLoader.svg" className="w-14 h-14" />
                     </div>
                   }
                 >
-                  <Results results={data} type={mediaType} grid={3} />
+                  <Results
+                    results={data}
+                    type={router.query.type || "movie"}
+                    grid={router.query.type == "person" ? 4 : 3}
+                  />
                 </InfiniteScroll>
               ) : (
-                <h1 className="text-3xl my-10 text-center font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-white to-[#E50914]">
-                  Opps! No Result Found.
-                </h1>
+                <div className="text-3xl my-10 text-center font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-white to-[#E50914] capitalize">
+                  ({data.length}) {router.query.type} Results
+                </div>
               )}
             </div>
           </div>
@@ -126,4 +123,19 @@ export default function Search() {
       </div>
     </Main_Theme>
   );
+}
+
+export async function getServerSideProps(contex) {
+  if (!contex.query.q) return { props: {} };
+  const data = await fetch(
+    `${API_BASE_URL}/search/${
+      contex.query.type || "movie"
+    }?api_key=${API_KEY}&query=${contex.query.q}`
+  ).then((res) => res.json());
+
+  return {
+    props: {
+      results: data,
+    },
+  };
 }

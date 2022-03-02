@@ -3,8 +3,6 @@ import tv_requests from "../../utils/tv_requests";
 
 function TV_Nav() {
   const router = useRouter();
-
-  let x = "Act-ion & Adventure";
   return (
     <nav className="relative ">
       <div

@@ -1,48 +1,50 @@
 import Main_Theme from "../components/Theme/Main_Theme";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Results from "../components/Results";
 import { API_BASE_URL, API_KEY } from "../utils/Common";
 import { HiSearch } from "react-icons/hi";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { useRouter } from "next/router";
 
-export default function Collection() {
-  const [keywoard, setKeywoard] = useState("");
+export default function Collection({ results }) {
+  const router = useRouter();
+  const [keyword, setKeyword] = useState(router.query.q);
   const [data, setData] = useState();
-  const [CurrentPage, setCurrentPage] = useState(0);
-  const [TotalPage, setTotalPage] = useState();
+  const [CurrentPage, setCurrentPage] = useState();
 
   const handlesubmit = async (e) => {
     e.preventDefault();
-    setData();
-    const req = await fetch(
-      `${API_BASE_URL}/search/collection?api_key=${API_KEY}&query=${keywoard}`
-    );
-    const newData = await req.json();
-    setData(newData.results);
-    setCurrentPage(newData.page);
-    setTotalPage(newData.total_pages);
+    if (!keyword.trim()) return;
+    router.push(`/collection?q=${keyword.trim()}`);
   };
 
   const LoadMoreData = async () => {
     const req = await fetch(
-      `${API_BASE_URL}/search/collection?api_key=${API_KEY}&query=${keywoard}&page=${
-        CurrentPage + 1
-      }`
+      `${API_BASE_URL}/search/collection?api_key=${API_KEY}&query=${
+        router.query.q
+      }&page=${CurrentPage + 1}`
     );
     const newData = await req.json();
     setData([...data, ...newData.results]);
     setCurrentPage(newData.page);
   };
+
+  useEffect(() => {
+    setData(results?.results);
+    setCurrentPage(results?.page);
+  }, [router.query.q]);
+
   return (
     <Main_Theme>
       <div className="m-5 md:m-6">
         <form onSubmit={handlesubmit}>
           <div className="flex max-w-3xl mx-auto">
             <input
+              defaultValue={keyword}
               type="search"
               placeholder="Search Collections"
               className=" bg-white opacity-80 outline-none w-full p-3 rounded-l-lg shadow-2xl text-black"
-              onChange={(e) => setKeywoard(e.target.value)}
+              onChange={(e) => setKeyword(e.target.value)}
             />
 
             {/* Button */}
@@ -58,13 +60,19 @@ export default function Collection() {
           </div>
         </form>
 
+        {results?.total_results > 0 && (
+          <div className="mt-2 text-right w-full">
+            About {results?.total_results} results
+          </div>
+        )}
+
         {data ? (
           <>
             {data.length > 0 ? (
               <InfiniteScroll
                 dataLength={data.length}
                 next={LoadMoreData}
-                hasMore={CurrentPage !== TotalPage}
+                hasMore={CurrentPage !== results?.total_pages}
                 loader={
                   <div className="flex items-center justify-center mb-3">
                     <img src="/CubeLoader.svg" className="w-14 h-14" />
@@ -83,4 +91,17 @@ export default function Collection() {
       </div>
     </Main_Theme>
   );
+}
+
+export async function getServerSideProps(contex) {
+  if (!contex.query.q) return { props: {} };
+  const data = await fetch(
+    `${API_BASE_URL}/search/collection?api_key=${API_KEY}&query=${contex.query.q}`
+  ).then((res) => res.json());
+
+  return {
+    props: {
+      results: data,
+    },
+  };
 }

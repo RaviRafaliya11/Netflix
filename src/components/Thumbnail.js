@@ -1,5 +1,9 @@
 import Image from "next/image";
-import { HiOutlineThumbUp, HiOutlineStar } from "react-icons/hi";
+import {
+  HiOutlineThumbUp,
+  HiOutlineStar,
+  HiOutlineCalendar,
+} from "react-icons/hi";
 import Link from "next/link";
 import { IMAGE_BASE_URL } from "./../utils/Common";
 
@@ -35,17 +39,39 @@ const Thumbnail = ({ results, type }) => {
           {results.name || results.title || results.original_name}
         </h2>
 
-        <p className="flex items-center opacity-0 group-hover:opacity-100 text-transform: capitalize ">
-          {results.media_type ? `${results.media_type} • ` : `${type} •`}{" "}
-          <HiOutlineStar className="h-5 mx-2" />
-          {(Math.round(results.vote_average * 100) / 100).toFixed(1)} •{" "}
-          <HiOutlineThumbUp className="h-5 mx-2" />
-          {results.vote_count}
+        <p className="flex items-center opacity-0 space-x-1.5  group-hover:opacity-100 text-transform: capitalize ">
+          <span>
+            {results.media_type ? `${results.media_type}` : `${type}`}
+          </span>
+          {results.vote_average && (
+            <span className="flex items-center">
+              •<HiOutlineStar className="h-5 ml-2 mr-1" />
+              {(Math.round(results.vote_average * 100) / 100).toFixed(1)}
+            </span>
+          )}
+          {results.vote_count && (
+            <span className="flex items-center">
+              •<HiOutlineThumbUp className="h-5 ml-2 mr-1" />
+              {results.vote_count}
+            </span>
+          )}
+          {results.release_date && (
+            <span className="flex items-center">
+              •<HiOutlineCalendar className="h-5 ml-2 mr-1" />
+              {results.release_date.split("-")[0]}
+            </span>
+          )}
+          {/* For TV */}
+          {results.first_air_date && (
+            <span className="flex items-center">
+              •<HiOutlineCalendar className="h-5 ml-2 mr-1" />
+              {results.first_air_date.split("-")[0]}
+            </span>
+          )}
         </p>
       </div>
     </div>
   );
 };
 
-Thumbnail.displayName = "Thumbnail";
 export default Thumbnail;
